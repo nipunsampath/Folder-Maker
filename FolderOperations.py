@@ -18,19 +18,19 @@ class FolderOperations:
             print(str(e))
 
     def make_seasons(self, path):
-        """Creates a season with """
+        """Creates a new directory for every season """
         season_paths = []
         try:
             for season in range(1, self.number_of_seasons + 1):
                 season_path = path + "\\Season %2d" % season
                 os.mkdir(season_path)
-                # self.make_episodes(season_path)
                 season_paths.append(season_path)
             return season_paths
         except OSError as e:
             print(str(e))
 
     def make_series(self):
+        """Creates a directory for the tv series with a directory for every episode"""
         series_path = self.path + "\\" + self.series_name
         try:
             os.mkdir(series_path)
@@ -41,6 +41,8 @@ class FolderOperations:
             print(str(e))
 
     def make_series_without_episode_dir(self):
+        """Creates a directory for the tv series with directories for seasons and a subtitle directory per each
+        season """
         series_path = self.path + "\\" + self.series_name
         try:
             os.mkdir(series_path)
