@@ -44,8 +44,6 @@ class Main(QtWidgets.QMainWindow):
             msgBox.exec_()
         else:
             msgBox.setIcon(QtWidgets.QMessageBox.Critical)
-
-            msgBox.setIcon(QtWidgets.QMessageBox.Critical)
             msgBox.setText('Directory already Exists')
             msgBox.setWindowTitle("Error")
             msgBox.exec_()
