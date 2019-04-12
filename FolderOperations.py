@@ -3,6 +3,9 @@ import os
 
 class FolderOperations:
 
+    SUCCESS = 100
+    OSERROR = 200
+
     def __init__(self, name, number_of_seasons, number_of_episodes, path):
         self.series_name = name
         self.number_of_episodes = number_of_episodes
@@ -37,8 +40,10 @@ class FolderOperations:
             paths = self.make_seasons(series_path)
             for path in paths:
                 self.make_episodes(path)
+            return FolderOperations.SUCCESS
         except OSError as e:
             print(str(e))
+            return FolderOperations.OSERROR
 
     def make_series_without_episode_dir(self):
         """Creates a directory for the tv series with directories for seasons and a subtitle directory per each
