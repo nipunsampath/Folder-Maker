@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Folder Maker</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="folderPathLineEdit">
@@ -43,7 +43,7 @@
       <x>20</x>
       <y>70</y>
       <width>671</width>
-      <height>251</height>
+      <height>271</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -55,11 +55,11 @@
        <x>0</x>
        <y>0</y>
        <width>671</width>
-       <height>189</height>
+       <height>209</height>
       </rect>
      </property>
      <attribute name="label">
-      <string>Page 1</string>
+      <string>TV Series</string>
      </attribute>
      <widget class="QLineEdit" name="seriesName">
       <property name="geometry">
@@ -155,26 +155,6 @@
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>150</y>
-        <width>241</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>Folder Per Episode</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Folder Per Season Only</string>
-       </property>
-      </item>
-     </widget>
      <widget class="QPushButton" name="createSeries">
       <property name="geometry">
        <rect>
@@ -188,6 +168,51 @@
        <string>Create Series</string>
       </property>
      </widget>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>139</y>
+        <width>241</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QRadioButton" name="perEpisodeRb">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>221</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>Creates sub directories for episodes inside a Season directory</string>
+       </property>
+       <property name="text">
+        <string>Sub Directory Per Episode</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="perSeasonRb">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>221</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>Creates only Seasons directories and Subtitles directories inside them</string>
+       </property>
+       <property name="text">
+        <string>Directory Per Season Only</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="movies">
      <property name="geometry">
@@ -195,11 +220,11 @@
        <x>0</x>
        <y>0</y>
        <width>671</width>
-       <height>189</height>
+       <height>209</height>
       </rect>
      </property>
      <attribute name="label">
-      <string>Page 2</string>
+      <string>Movies</string>
      </attribute>
     </widget>
    </widget>
