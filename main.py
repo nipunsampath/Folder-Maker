@@ -1,12 +1,13 @@
 from FolderOperations import FolderOperations
 from GUI.mainUI import Ui_MainWindow
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtWidgets, QtGui,QtCore
 
 import sys
 
 
 class Main(QtWidgets.QMainWindow):
-
+    PerSeason = 1
+    PerEpisode = 2
     def __init__(self):
         super(Main, self).__init__()
 
@@ -16,6 +17,8 @@ class Main(QtWidgets.QMainWindow):
 
         self.ui.openFolderPath.clicked.connect(self.openFolderSelectDialog)
         self.ui.createSeries.clicked.connect(self.createSeriesDirectory)
+        self.ui.perEpisodeRb.toggled.connect(self.radioButtonToggled)
+        self.ui.perSeasonRb.toggled.connect(self.radioButtonToggled)
         self.onlyInt = QtGui.QIntValidator()
         # self.ui.numberOfEpisodes.textChanged.connect(self.check_state)
         # self.ui.numberOfEpisodes.emit(self.ui.numberOfEpisodes.text())
@@ -27,6 +30,13 @@ class Main(QtWidgets.QMainWindow):
                                                               QtWidgets.QFileDialog.ShowDirsOnly)
         self.ui.folderPathLineEdit.setText(fileName)
 
+    def radioButtonToggled(self):
+        if self.ui.perEpisodeRb.isChecked():
+            self.tvSeriesMode = Main.PerEpisode
+        elif self.ui.perSeasonRb.isChecked():
+            self.tvSeriesMode = Main.PerSeason
+
+
     def createSeriesDirectory(self):
         path = self.ui.folderPathLineEdit.text()
         seriesName = self.ui.seriesName.text()
@@ -34,7 +44,10 @@ class Main(QtWidgets.QMainWindow):
         numberOfEpisodes = int(self.ui.numberOfEpisodes.text())
 
         folderOps = FolderOperations(seriesName, numberOfSeasons, numberOfEpisodes, path)
-        requestCode = folderOps.make_series()
+        if self.tvSeriesMode == Main.PerEpisode:
+            requestCode = folderOps.make_series()
+        elif self.tvSeriesMode == Main.PerSeason:
+            requestCode = folderOps.make_series_without_episode_dir()
 
         msgBox = QtWidgets.QMessageBox()
         if requestCode == FolderOperations.SUCCESS:
