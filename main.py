@@ -10,7 +10,7 @@ class Main(QtWidgets.QMainWindow):
     PerEpisode = 2
     def __init__(self):
         super(Main, self).__init__()
-
+        self.setWindowIcon(QtGui.QIcon("folder.png"))
         self.ui = Ui_MainWindow()
 
         self.ui.setupUi(self)
@@ -36,31 +36,43 @@ class Main(QtWidgets.QMainWindow):
         elif self.ui.perSeasonRb.isChecked():
             self.tvSeriesMode = Main.PerSeason
 
+    def checkForEmptyLineEdits(self,arr):
+        """Takes an array of elements and check returns whether they are empty"""
+        for element in arr:
+            if element.text() == "":
+                return False
+        return True
 
     def createSeriesDirectory(self):
         path = self.ui.folderPathLineEdit.text()
         seriesName = self.ui.seriesName.text()
-        numberOfSeasons = int(self.ui.numberOfSeasons.text())
-        numberOfEpisodes = int(self.ui.numberOfEpisodes.text())
-
-        folderOps = FolderOperations(seriesName, numberOfSeasons, numberOfEpisodes, path)
-        if self.tvSeriesMode == Main.PerEpisode:
-            requestCode = folderOps.make_series()
-        elif self.tvSeriesMode == Main.PerSeason:
-            requestCode = folderOps.make_series_without_episode_dir()
-
+        numberOfSeasons = self.ui.numberOfSeasons.text()
+        numberOfEpisodes = self.ui.numberOfEpisodes.text()
         msgBox = QtWidgets.QMessageBox()
-        if requestCode == FolderOperations.SUCCESS:
-            msgBox.setIcon(QtWidgets.QMessageBox.Information)
-            msgBox.setText('Directories Created!')
-            msgBox.setWindowTitle("Success")
-            msgBox.exec_()
+        if path != "" and seriesName != "" and numberOfEpisodes != "" and numberOfSeasons != "":
+
+            folderOps = FolderOperations(seriesName, int(numberOfSeasons), int(numberOfEpisodes), path)
+            if self.tvSeriesMode == Main.PerEpisode:
+                requestCode = folderOps.make_series()
+            elif self.tvSeriesMode == Main.PerSeason:
+                requestCode = folderOps.make_series_without_episode_dir()
+
+            if requestCode == FolderOperations.SUCCESS:
+                msgBox.setIcon(QtWidgets.QMessageBox.Information)
+                msgBox.setText('Directories Created!')
+                msgBox.setWindowTitle("Success")
+                msgBox.exec_()
+            else:
+                msgBox.setIcon(QtWidgets.QMessageBox.Critical)
+                msgBox.setText('Directory already Exists')
+                msgBox.setWindowTitle("Error")
+                msgBox.exec_()
+
         else:
             msgBox.setIcon(QtWidgets.QMessageBox.Critical)
-            msgBox.setText('Directory already Exists')
+            msgBox.setText('Check the inputs')
             msgBox.setWindowTitle("Error")
             msgBox.exec_()
-
     # To DO
     # def check_state(self, *args, **kwargs):
     #     sender = self.sender()
