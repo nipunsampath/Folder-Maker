@@ -1,6 +1,6 @@
 from FolderOperations import FolderOperations
 from GUI.mainUI import Ui_MainWindow
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtWidgets, QtGui
 
 import sys
 
@@ -15,6 +15,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.toolBox.setCurrentIndex(1)
+        self.tvSeriesMode = Main.PerEpisode
         # Connecting graphical elements with respective functions in TV series page
         self.ui.openFolderPath.clicked.connect(self.openFolderSelectDialog)
         self.ui.createSeries.clicked.connect(self.createSeriesDirectory)
@@ -61,7 +62,8 @@ class Main(QtWidgets.QMainWindow):
         item = self.ui.listWidget.item(row)
 
         if item is not None:
-            movie, ok = QtWidgets.QInputDialog.getText(self, "Edit Movie", "Movie Name: ", QtWidgets.QLineEdit.Normal,item.text())
+            movie, ok = QtWidgets.QInputDialog.getText(self, "Edit Movie", "Movie Name: ", QtWidgets.QLineEdit.Normal,
+                                                       item.text())
             if movie and ok is not None:
                 item.setText(movie)
 
@@ -83,6 +85,8 @@ class Main(QtWidgets.QMainWindow):
         numberOfSeasons = self.ui.numberOfSeasons.text()
         numberOfEpisodes = self.ui.numberOfEpisodes.text()
         msgBox = QtWidgets.QMessageBox()
+        requestCode = 0
+
         if path != "" and seriesName != "" and numberOfEpisodes != "" and numberOfSeasons != "":
 
             folderOps = FolderOperations(seriesName, int(numberOfSeasons), int(numberOfEpisodes), path)
@@ -92,21 +96,24 @@ class Main(QtWidgets.QMainWindow):
                 requestCode = folderOps.make_series_without_episode_dir()
 
             if requestCode == FolderOperations.SUCCESS:
-                msgBox.setIcon(QtWidgets.QMessageBox.Information)
-                msgBox.setText('Directories Created!')
-                msgBox.setWindowTitle("Success")
-                msgBox.exec_()
+                self.createSuccessMsgBox(msgBox)
             else:
-                msgBox.setIcon(QtWidgets.QMessageBox.Critical)
-                msgBox.setText('Directory already Exists')
-                msgBox.setWindowTitle("Error")
-                msgBox.exec_()
+                self.createOSERRORmsgBox(msgBox)
 
         else:
-            msgBox.setIcon(QtWidgets.QMessageBox.Critical)
-            msgBox.setText('Check the inputs')
-            msgBox.setWindowTitle("Error")
-            msgBox.exec_()
+            self.inputErrorMsgBox(msgBox)
+
+    def createOSERRORmsgBox(self, msgBox):
+        msgBox.setIcon(QtWidgets.QMessageBox.Critical)
+        msgBox.setText('Directory already Exists')
+        msgBox.setWindowTitle("Error")
+        msgBox.exec_()
+
+    def createSuccessMsgBox(self, msgBox):
+        msgBox.setIcon(QtWidgets.QMessageBox.Information)
+        msgBox.setText('Directories Created!')
+        msgBox.setWindowTitle("Success")
+        msgBox.exec_()
 
     def createMovieDirectories(self):
 
@@ -119,33 +126,17 @@ class Main(QtWidgets.QMainWindow):
             requestCode = folderOps.make_movie_directories(movies, self.ui.subsChecBox.isChecked())
 
             if requestCode == FolderOperations.SUCCESS:
-                msgBox.setIcon(QtWidgets.QMessageBox.Information)
-                msgBox.setText('Directories Created!')
-                msgBox.setWindowTitle("Success")
-                msgBox.exec_()
+                self.createSuccessMsgBox(msgBox)
             else:
-                msgBox.setIcon(QtWidgets.QMessageBox.Critical)
-                msgBox.setText('Directory already Exists')
-                msgBox.setWindowTitle("Error")
-                msgBox.exec_()
+                self.createOSERRORmsgBox(msgBox)
         else:
-            msgBox.setIcon(QtWidgets.QMessageBox.Critical)
-            msgBox.setText('Check the inputs')
-            msgBox.setWindowTitle("Error")
-            msgBox.exec_()
+            self.inputErrorMsgBox(msgBox)
 
-    # To DO
-    # def check_state(self, *args, **kwargs):
-    #     sender = self.sender()
-    #     validator = sender.validator()
-    #     state = validator.validate(sender.text(), 0)[0]
-    #     if state == QtGui.QValidator.Acceptable:
-    #         color = '#c4df9b'  # green
-    #     elif state == QtGui.QValidator.Intermediate:
-    #         color = '#fff79a'  # yellow
-    #     else:
-    #         color = '#f6989d'  # red
-    #     sender.setStyleSheet('QLineEdit { background-color: %s }' % color)
+    def inputErrorMsgBox(self, msgBox):
+        msgBox.setIcon(QtWidgets.QMessageBox.Critical)
+        msgBox.setText('Check the inputs')
+        msgBox.setWindowTitle("Error")
+        msgBox.exec_()
 
 
 if __name__ == "__main__":
