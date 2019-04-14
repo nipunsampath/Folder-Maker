@@ -44,7 +44,7 @@ Silicon Valley
     │
     └─── Subtitles
 ```
-### Creating Directories For Movies
+## Creating Directories For Movies
 
 Multiple movie directories can be created with or without Subtitles sub directory using Folder Maker. Simply add as much as movie titles to the list and press create button.
 
