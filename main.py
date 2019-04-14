@@ -11,7 +11,7 @@ class Main(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(Main, self).__init__()
-        self.setWindowIcon(QtGui.QIcon("folder.png"))
+        self.setWindowIcon(QtGui.QIcon("icons/folder.png"))
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.toolBox.setCurrentIndex(1)
