@@ -98,7 +98,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.toolBox.setCurrentIndex(1)
+        self.toolBox.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -106,9 +106,13 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Folder Maker"))
         self.openFolderPath.setText(_translate("MainWindow", "Folder Path"))
         self.addButton.setText(_translate("MainWindow", "Add "))
+        self.addButton.setShortcut(_translate("MainWindow", "A"))
         self.createMoviesButton.setText(_translate("MainWindow", "Create "))
+        self.createMoviesButton.setShortcut(_translate("MainWindow", "C"))
         self.removeButton.setText(_translate("MainWindow", "Remove"))
+        self.removeButton.setShortcut(_translate("MainWindow", "R"))
         self.editButton.setText(_translate("MainWindow", "Edit"))
+        self.editButton.setShortcut(_translate("MainWindow", "E"))
         self.subsChecBox.setText(_translate("MainWindow", "Subtitles"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.movies), _translate("MainWindow", "Movies"))
         self.label.setText(_translate("MainWindow", "Series Name"))

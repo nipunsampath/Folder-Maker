@@ -47,7 +47,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="movies">
      <property name="geometry">
@@ -73,6 +73,9 @@
       <property name="text">
        <string>Add </string>
       </property>
+      <property name="shortcut">
+       <string>A</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="createMoviesButton">
       <property name="geometry">
@@ -85,6 +88,9 @@
       </property>
       <property name="text">
        <string>Create </string>
+      </property>
+      <property name="shortcut">
+       <string>C</string>
       </property>
      </widget>
      <widget class="QPushButton" name="removeButton">
@@ -99,6 +105,9 @@
       <property name="text">
        <string>Remove</string>
       </property>
+      <property name="shortcut">
+       <string>R</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="editButton">
       <property name="geometry">
@@ -111,6 +120,9 @@
       </property>
       <property name="text">
        <string>Edit</string>
+      </property>
+      <property name="shortcut">
+       <string>E</string>
       </property>
      </widget>
      <widget class="QListWidget" name="listWidget">
